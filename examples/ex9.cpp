@@ -28,6 +28,7 @@
 //               saving of time-dependent data files for external visualization
 //               with VisIt (visit.llnl.gov) is also illustrated.
 
+#include "RAJA/RAJA.hpp"
 #include "mfem.hpp"
 #include <fstream>
 #include <iostream>
@@ -129,6 +130,16 @@ int main(int argc, char *argv[])
       return 1;
    }
    args.PrintOptions(cout);
+
+   //----------------------
+   //RAJA block
+#if defined(RAJA_CUDA_ENABLED)
+   using pol = RAJA::cuda_exec<256>;
+   RAJA::forall(RAJA::RangeSegment(0, 1), [=] __device__ (RAJA::Index_type i) {
+       print("Greetings from RAJA Cuda \n");
+     });
+#endif
+
 
    // 2. Read the mesh from the given mesh file. We can handle geometrically
    //    periodic meshes in this code.

@@ -157,7 +157,8 @@ endif
 # Compile flags used by MFEM: CPPFLAGS, CXXFLAGS, plus library flags
 INCFLAGS =
 # Link flags used by MFEM: library link flags plus LDFLAGS (added last)
-ALL_LIBS = -L/usr/tce/packages/cuda/cuda-9.2.88/lib64 -lcuda -lcudart
+ALL_LIBS = -L/usr/tce/packages/cuda/cuda-9.2.88/lib64 -lcuda -lcudart  
+#-L/usr/WS1/vargas45/Git-Repos/MFEM_BUILD/RAJA/build/lib/libRAJA.a
 
 # Building static and/or shared libraries:
 MFEM_STATIC ?= $(STATIC)
@@ -185,6 +186,15 @@ else
    INCFLAGS += $(HYPRE_OPT)
    ALL_LIBS += $(HYPRE_LIB)
 endif
+
+#Add RAJA
+#RAJA_DIR ?= /usr/WS1/vargas45/Git-Repos/MFEM_BUILD/RAJA/build
+#RAJA_INC = $(RAJA_DIR)/include
+#RAJA_LIB = $(RAJA_DIR)/lib/libRAJA.a
+
+#INCFLAGS += $(RAJA_INC)
+#ALL_LIBS += $(RAJA_LIB)
+
 
 DEP_CXX ?= $(MFEM_CXX)
 
